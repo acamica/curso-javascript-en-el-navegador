@@ -1,0 +1,49 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Javascript en el Navegador - 4.2 Jugando con el tiempo (parte 2)</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="text/javascript">
+    window.onload = function() {
+
+      // Por medio de esta funcion obtenemos la fecha en el siguiente formato: d/m/aaaa h:m:s am/pm
+      function formatearHora(date) {
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+        var seconds = date.getSeconds();
+        var ampm = hours >= 12 ? 'pm' : 'am';
+        hours = hours % 12;
+        hours = hours ? hours : 12;
+        minutes = minutes < 10 ? '0'+minutes : minutes;
+        var strTime = hours + ':' + minutes + ':' + seconds + ' ' + ampm;
+        return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear() + "  " + strTime;
+      }
+
+      function mostrarLaHora() {
+        // Obtenemos una referencia al elemento que tiene el id texto
+        var elemento = document.getElementById('texto');
+
+        // Creamos una nueva fecha
+        var fecha = new Date();
+
+        // Establecemos la nueva fecha con el formato que obtenemos en la funcion formatearHora
+        elemento.innerText = formatearHora(fecha);
+      }
+
+      /*
+        Con setInterval podemos ejecutar la funcion mostrarLaHora cada 1000 milisegundos
+        (1 segundo). Obtenemos como respuesta un id.
+      */
+      var id = window.setInterval(mostrarLaHora, 1000);
+
+      // Si descomentamos esta linea con clearInterval cortamos la ejecución del intervalo establecido
+      // window.clearInterval(id);
+    }
+  </script>
+</head>
+<body>
+  <div id="texto"></div>
+</body>
+</html>

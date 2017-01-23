@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Javascript en el Navegador - 3.2 Mostrar un mensaje de bienvenida personalizado</title>
+  <script type="text/javascript">
+    // prompt('Ingrese su nombre');
+
+    // var nombre = prompt('Ingrese su nombre');
+    // alert(nombre);
+
+    // var nombre = prompt('Ingrese su nombre');
+    // alert('Bienvenido ' + nombre + ' al curso de Javascript en el Navegador');
+
+    // var nombre = prompt('Ingrese su nombre');
+    // var mensaje = 'Bienvenido ' + nombre + ' al curso de Javascript en el Browser';
+    // alert(mensaje);
+
+    /*
+      Utilizamos prompt para pedirle al usuario su nombre y obtener un string como respuesta que
+      guardamos en la variable nombre
+    */
+    var nombre = prompt('Ingrese su nombre');
+
+    // Preguntamos si la variable nombre existe y si no es null para evitar un problema
+    if (nombre && nombre !== 'null') {
+      // Definimos una variable mensaje utilizando el nombre del usuario
+      var mensaje = 'Bienvenido ' + nombre + ' al curso de Javascript en el Browser';
+
+      // Le mostramos al usuario un mensaje de bienvenida con su nombre
+      alert(mensaje);
+    }
+  </script>
+</head>
+<body>
+</body>
+</html>

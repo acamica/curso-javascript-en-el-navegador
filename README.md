@@ -1,1 +1,1 @@
-# curso-javascript-en-el-navegador
+# Javascript en el Navegador

@@ -1,0 +1,26 @@
+body {
+  background-color: #c4544e;
+  font-size: 18px;
+  font-family: arial;
+}
+
+#lista {
+  width: 80%;
+  color: white;
+  border: 2px solid #ff9e99;
+  margin: 10px auto;
+  padding: 5px 0;
+  background-color: #ffc9c6;
+  list-style-position: inside;
+}
+
+#lista li {
+  color: #c4544e;
+  line-height: 40px;
+  border-bottom: 2px solid #c4544e;
+  padding: 0 10px;
+}
+
+#lista li:last-child {
+  border-bottom: none;
+}
