@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Javascript en el Navegador - 4.6 Editor de texto</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="text/javascript">
+    // Por medio del evento onload nos aseguramos que se termino de cargar el documento
+    window.onload = function() {
+      /*
+        Obtenemos una coleccion de botones seleccionando los divs que están dentro del
+        contenedor con la clase colores que está dentro del contenedor con ID controles
+      */
+      var botonesDeColor = document.querySelectorAll('#controles .colores div');
+
+      /*
+        Obtenemos una coleccion de botones seleccionando los divs que están dentro del contenedor
+        con la clase formatos que está dentro del contenedor con ID controles
+      */
+      var botonesDeFormato = document.querySelectorAll('#controles .formatos div');
+
+      /*
+        Obtenemos una referencia al elemento que tiene el ID crear. Podemos utilizar el selector
+        de document.getElementByID
+      */
+      var crear = document.querySelector('#crear');
+
+      // Obtenemos una referencia al elemento textarea que esta dentro del form
+      var textArea = document.querySelector('form textarea');
+
+      /*
+        Obtenemos una referencia al elemento lista con el ID textos que vamos a utilizar para
+        mostrar lo que el usuario escribe en el textarea con el formato seleccionado a la hora
+        de crearlo
+      */
+      var listaDeTextos = document.querySelector('#textos');
+
+      /*
+        Definimos la funcion traducirColor para pasar los nombres de los colores de español a inglés
+      */
+      function traducirColor(color) {
+        // Declaramos una variable coloresCss y le asignamos un string vacio
+        var colorCss = '';
+
+        /*
+          Utilizamos un switch para saber que color nos pasaron en español y traducir
+          el color a ingles
+        */
+        switch (color) {
+          case 'azul':
+              colorCss = 'blue';
+            break;
+          case 'rojo':
+            colorCss = 'red';
+            break;
+          case 'amarillo':
+            colorCss = 'yellow';
+            break;
+          case 'verde':
+            colorCss = 'green';
+            break;
+        }
+
+        // Esta funcion devuelve el color traducido de español a ingles
+        return colorCss;
+      }
+
+      /*
+        Definimos la funcion establecerColorDeFondo para asignarle un color a cada boton
+      */
+      function establecerColorDeFondo(elemento) {
+        // Declaramos la variable colorDeFondo y le asignamos un string vacio
+        var colorDeFondo = '';
+
+        // Al elemento que nos pasan como parametro le borramos la clase selected
+        var clase = elemento.className.replace('selected', '').trim();
+
+        /*
+          Transformamos el nombre del color de la clase (español) a un color de css en ingles
+          utilizando la funcion traducirColor
+        */
+        colorDeFondo = traducirColor(clase);
+
+        /*
+          Establecemos el color del background utilizando el objeto style y la propiedad
+          backgroundColor. Recordemos que las propiedades de css en Javascript se escriben
+          en camelCase es decir que background-color se transforma en backgroundColor
+        */
+        elemento.style.backgroundColor = colorDeFondo;
+      }
+
+      // Definimos la funcion seleccionarElemento
+      function seleccionarElemento() {
+        // Hacemos el uso del this para obtener una referencia al elemento que llama a esta funcion
+        var elemento = this;
+
+        // Obtenemos una referencia al elemento padre del elemento seleccionado
+        var contenedor = elemento.parentElement;
+
+        // Obtenemos una referencia a los hijos del elemento padre que guardamos en la variable contenedor
+        var botones = contenedor.children;
+
+        // Recorremos la coleccion de botones utilizando la propiedad length para saber cuantos elementos tenemos
+        for (var i = 0; i < botones.length; i++) {
+          // Obtenemos una referencia a cada boton. En cada iteracion va a cambiar de boton
+          var boton = botones[i];
+
+          // Nos fiamos si el boton tiene la clase selected utilizando la propiedad className e indexOf
+          if (boton.className.indexOf('selected') > -1) {
+            // Le sacamos la clase selected si el boton tiene dicha clase
+            var nuevaClase = boton.className.replace('selected', '');
+
+            // Asignamos la clase al boton. En este caso sería sin la clase selected
+            boton.className = nuevaClase;
+          }
+        }
+
+        /*
+          Asignamos la nueva clase al elemento seleccionado utilizando el nombre de la
+          clase (ej: azul) más selected
+        */
+        elemento.className = elemento.className + ' selected';
+      }
+
+      // Definimos la funcion obtenerColorSeleccionado
+      function obtenerColorSeleccionado() {
+        // obtenemos una referencia al boton seleccionado que tiene la clase selected
+        var botonColorSeleccionado = document.querySelector('#controles .colores div.selected');
+
+        // Sacamos la clase selected del elemento seleccionado
+        var color = botonColorSeleccionado.className.replace('selected', '').trim();
+
+        // Retornamos el color del elemento seleccionado traducido
+        return traducirColor(color);
+      }
+
+      // Definimos la funcion obtenerFormatoSeleccionado
+      function obtenerFormatoSeleccionado() {
+        // Obtenemos una referencia al elemento seleccionado
+        var formatoSeleccionado = document.querySelector('#controles .formatos div.selected');
+        // Devolvemos el nombre del formato sin la clase selected
+        return formatoSeleccionado.className.replace('selected', '').trim();
+      }
+
+      // Definimos la funcion removerTexto
+      function removerTexto() {
+        // Guardamos una referencia del elemento seleccionado
+        var texto = this;
+
+        // Obtenemos una referencia al padre del elemento seleccionado utilizando parentElement
+        var elementoPadre = texto.parentElement;
+
+        // Le preguntamos al usuario si quiere borrar este elemento
+        var borrar = confirm('Quiere borrar este elemnto?');
+
+        // Si el usuario quiere borar el elemento ejecutamos el siguiente codigo
+        if (borrar) {
+          /*
+            Borramos el manejador del evento click y la función removerTexto para no generar
+            problemas de memoria
+          */
+          texto.removeEventListener('click', removerTexto);
+
+          // Borramos el elemento selecionado utilizando removeChild
+          elementoPadre.removeChild(texto);
+        }
+      }
+
+      // Definimos la funcion crearTexto
+      function crearTexto() {
+
+        // Creamos un nuevo elemento de lista (li)
+        var nuevoTexto = document.createElement('li');
+
+        // Obtenemos el color seleccionado por medio de la funcion obtenerColorSeleccionado
+        var color = obtenerColorSeleccionado();
+
+        // Obtenemos el formato seleccionado por medio de la funcion obtenerFormatoSeleccionado
+        var formato = obtenerFormatoSeleccionado();
+
+        /*
+          Utilizamos la propiedad textContent para establecer el texto que tiene el textArea, es
+          decir lo que escribió el usuario
+        */
+        nuevoTexto.textContent = textArea.value;
+
+        // Establecemos el nuevo color de texto utilizando el objeto style y la propiedad color
+        nuevoTexto.style.color = color;
+
+        // Si el formato elegido es bold
+        if (formato === 'bold') {
+          // Establecemos el formato a bold
+          nuevoTexto.style.fontWeight = 'bold';
+        } else if (formato === 'italic') {
+          // Si el formato es italic establecemos el nuevo formato
+          nuevoTexto.style.fontStyle = 'italic';
+        }
+
+        /*
+          Asignamos un manejador del evento click al elemento creado y asignamos la funcion
+          removerTexto en caso de que le hagan click
+        */
+        nuevoTexto.addEventListener('click', removerTexto);
+
+        // Agregamos en nuevo elemento a la lista utilizando appendChild
+        listaDeTextos.appendChild(nuevoTexto);
+
+        // Limpiamos el contenido de la lista
+        textArea.value = '';
+      }
+
+      // Recorremos la coleccion de botones
+      botonesDeColor.forEach(function(boton) {
+        // Por cada boton de color vamos a asignarle un color de forma dinamica
+        establecerColorDeFondo(boton);
+
+        // Asignamos un manejador del evento click con la funcion seleccionarElemento
+        boton.addEventListener('click', seleccionarElemento);
+      });
+
+      // Recorremos la coleccion de botones de formato
+      botonesDeFormato.forEach(function(boton) {
+        // Asignamos un manejador del evento click con la funcion seleccionarElemento
+        boton.addEventListener('click', seleccionarElemento);
+      });
+
+      // Asignamos un manejador de evento para el boton crear
+      crear.addEventListener('click', function(e) {
+        /*
+          Obtenemos una referencia al evento en la variable e. Utilizamos el metodo preventDefault
+          pera evitar que se ejecture el evento que tiene el elemento, en este caso seria navegar
+          a otro documento que es lo que hace el hipervinculo por defecto. Hacemos esto para poder
+          controlar el comportamiento que queremos que se ejecute ante este evento.
+        */
+        e.preventDefault();
+
+        // Si el usuario ingreso un texto
+        if (textArea.value.length > 0) {
+          // Creamos el texto
+          crearTexto();
+        }
+      });
+    }
+  </script>
+</head>
+<body>
+  <form>
+    <textarea placeholder="Ingrese un texto"></textarea>
+  </form>
+  <div id="controles">
+    <div class="colores">
+      <div class="azul selected"></div>
+      <div class="rojo"></div>
+      <div class="amarillo"></div>
+      <div class="verde"></div>
+    </div>
+    <div class="formatos">
+      <div class="bold selected">Bold</div>
+      <div class="italic">Italic</div>
+    </div>
+    <a id="crear">Crear</a>
+  </div>
+  <div>
+    <ul id="textos"></ul>
+  <div>
+</body>
+</html>

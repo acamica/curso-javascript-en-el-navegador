@@ -1,0 +1,35 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Javascript en el Navegador - 4.4 Lista de compras</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="text/javascript">
+    // Por medio del evento onload nos aseguramos que se termino de cargar el documento
+    window.onload = function() {
+      // Definimos un array de productos
+      var productos = ['Bananas', 'Manzana', 'Queso Blanco', 'Carne', 'Pollo', 'Huevos'];
+
+      // Obtenemos una referencia al elemento que tiene el ID lista
+      var lista = document.getElementById('lista');
+
+      // Recorremos la coleccion de productos y en cada iteracion tenemos el nombre de un producto
+      productos.forEach(function(producto) {
+        // Creamos un nuevo elemento de lista (li)
+        var elementoDeLista = document.createElement('li');
+
+        // Establecemos el texto del elemento de lista con el nombre del producto
+        elementoDeLista.innerText = producto;
+
+        // Agregamos el elemento de lista que creamos a la lista
+        lista.appendChild(elementoDeLista);
+      });
+    }
+  </script>
+</head>
+<body>
+  <!-- Vamos a utilizar esta lista como contenedor de nuestros productos -->
+  <ol id="lista"></ol>
+</body>
+</html>

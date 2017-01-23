@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Javascript en el Navegador - 4.5 galeria de imagenes</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="text/javascript">
+    // Por medio del evento onload nos aseguramos que se termino de cargar el documento
+    window.onload = function() {
+      // Obtenemos una referencia a la imagen que está dentro del contenedor con la clase detalle
+      var imagenGrande = document.querySelector('.detalle img');
+
+      // Obtenemos una coleccion de elementos imagenes que están dentro del contenedor con la clase thumbnails
+      var imagenes = document.querySelectorAll('.thumbnails ul li img');
+
+      // Declaramos la funcion cambiarImage que se ejecuta al hacer click en cada imagen pequeña
+      function cambiarImagen() {
+        /*
+          Al asignar esta funcion como manejador del evento click de cada imagen obtenemos una
+          referencia a esa imagen en el objeto this. Guardamos esta referencia en la variable
+          imagenSeleccionada para que se entienda mejor el contexto de quien es this en este caso.
+          Podemos utilizar this directamente si queremos.
+        */
+        var imagenSeleccionada = this;
+
+        // Utilizamos la propiedad src de cada imagen para obtener la ruta
+        var ruta = imagenSeleccionada.src.replace('thumbs/', '');
+
+        // Establecemos la propiedad src de la imagen grande con la misma imagen que tiene la imagen pequeña
+        imagenGrande.src = ruta;
+
+        // Obtenemos una referencia a la imagen que estaba seleccionada previamente y tenía la clase seleccionada
+        var elementoPrevio = document.querySelector('.seleccionada');
+
+        // Borramos la clase seleccionada de la imagen pequeña que estaba seleccionada previamente
+        elementoPrevio.className = '';
+
+        // Seleccionamos la imagen estableciendo la clase seleccionada utilizando el metodo setAttribute (podemos utilizar className)
+        imagenSeleccionada.setAttribute('class', 'seleccionada');
+
+        // Obtenemos una referencia al elemento con la clase descripcion que esta dentro del contenedor detalle
+        var descripcion = document.querySelector('.detalle .descripcion');
+
+        // Validamos si la imagen seleccionada tiene un atributo alt por medio del metodo hasAttribute
+        if (imagenSeleccionada.hasAttribute('alt')) {
+          /*
+            Si la imagen tiene el atributo alt podemos crear un cartelito con el texto.
+            Utilizamos la propiedad innerHTML para crear el contenido del elemento descripcion
+            utilizando un string. En este caso creamos un elemento span y obtenemos el texto
+            que tiene la imagen seleccionada en el atributo alt ya que estamos seguro que tiene uno
+          */
+          descripcion.innerHTML = '<span>' + imagenSeleccionada.getAttribute('alt') + '</span>';
+        } else {
+          /*
+            En caso de que la imagen no tenga el atributo alt establecemos el texto en vacio.
+            Utilizamos innerHTML para borrar el contenido del elemento ya que podía tener creado
+            un elemento span de otra imagen previa que si tenía el atributo alt
+          */
+          descripcion.innerHTML = '';
+        }
+      };
+
+      // Recorremos la lista de imagenes pequeñas (thumbnails)
+      imagenes.forEach(function(imagen) {
+        // Asignamos la funcion cambiarImagen como manejador de evento click de cada imagen pequeña (thumbnail)
+        imagen.onclick = cambiarImagen;
+      });
+    }
+  </script>
+</head>
+<body>
+  <!-- Utilizamos la imagen de este contenedor para mostra la imagen de mayor tamaño -->
+  <div class="detalle">
+    <img src="img/1.jpg" />
+    <!-- Mostramos el texto inicial para tener un modelo de descripcion para luego crearlo desde javascript -->
+    <div class="descripcion">
+      <span>Harry, Ron y Hermione</span>
+    </div>
+  </div>
+  <!-- Esta lista contiene todas las imagenes pequeñas a las cuales vamos a poder hacer click y mostrarlas en la imagen mas grande -->
+  <div class="thumbnails">
+    <ul>
+      <li><img src="img/thumbs/1.jpg" alt="Harry, Ron y Hermione" class="seleccionada"></li>
+      <!-- Tenemos que tener en cuenta que hay imagenes que no tienen el atributo alt -->
+      <li><img src="img/thumbs/2.jpg"></li>
+      <li><img src="img/thumbs/3.jpg"></li>
+      <li><img src="img/thumbs/4.jpg" alt="Harry Potter"></li>
+      <li><img src="img/thumbs/5.jpg" alt="Hermione Granger"></li>
+      <li><img src="img/thumbs/6.jpg" alt="Severus Snape"></li>
+      <li><img src="img/thumbs/7.jpg" alt="Lord Voldemort"></li>
+      <li><img src="img/thumbs/8.jpg" alt="Bellatrix Lestrange"></li>
+      <li><img src="img/thumbs/9.jpg" alt="Hogwarts Battle"></li>
+    </ul>
+  </div>
+</body>
+</html>

@@ -1,0 +1,105 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: arial;
+  font-size: 14px;
+}
+
+form {
+  text-align: center;
+}
+
+textarea {
+  width: 90%;
+  height: 200px;
+  font-size: 14px;
+}
+
+#controles {
+    width: 90%;
+    margin: 0 auto;
+    font-size: 0;
+    padding: 10px;
+}
+
+#controles .colores div {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border: 1px solid black;
+  cursor: pointer;
+  margin-left: 10px;
+  border-radius: 5px;
+}
+
+#controles .colores div.selected {
+  border: 3px solid black;
+}
+
+#controles .colores div:hover {
+  box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.50);
+}
+
+#controles .formatos {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+#controles .formatos div {
+  font-size: 14px;
+  display: inline-block;
+  cursor: pointer;
+  margin-left: 10px;
+  border: 1px solid black;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#controles .formatos div:hover {
+  box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.50);
+}
+
+#controles .formatos div.selected {
+  background-color: #EEE;
+  border-width: 3px;
+}
+
+#crear {
+  text-align: center;
+  display: block;
+  width: 100px;
+  font-size: 14px;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 8px;
+  cursor: pointer;
+  outline: none;
+  margin-left: 10px
+}
+
+#crear:hover {
+  box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.50);
+}
+
+#crear:active {
+  background-color: #ccc;
+}
+
+ul {
+  padding: 0;
+  margin: 10px 0;
+  list-style: none;
+}
+
+ul li {
+  padding: 10px 20px;
+  background-color: #eee;
+  margin-bottom: 5px;
+}
+
+ul li:hover {
+  background-color: #ccc;
+  cursor: pointer;
+}

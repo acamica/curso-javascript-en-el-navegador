@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Javascript en el Navegador - 3.3 Obtener confirmación del usuario</title>
+  <script type="text/javascript">
+    // confirm('Te gustaría recibir un saludo de bienvenida?');
+
+    // var mensaje = 'Te gustaría recibir un saludo de bienvenida?';
+    // confirm(mensaje);
+
+    function saludar () {
+      // Le pedimos al usuario su nombre y lo guardamos en la variable nombre utilizando prompt
+      var nombre = prompt('Ingrese su nombre');
+
+      // Validamos si el usuario ingreso un nombre
+      if (nombre && nombre !== 'null') {
+        // Definimos un mensaje de bienvenida
+        var bievenida = 'Bienvenido ' + nombre + ' al curso de Javascript en el Navegador';
+
+        // Le mostramos al usuario un mensaje de bienvenida con su nombre
+        alert(bievenida);
+      }
+    }
+
+    // Guardamos una pregunta en la variable mensaje
+    var mensaje = 'Te gustaría recibir un saludo de bienvenida?';
+
+    // Le mosramos al usuario una pregunta utilizando confirm y guardamos su respuesta (true/false)
+    var respuesta = confirm(mensaje);
+
+    // Llamamos a la función saludar si el usuario acepto ser saludado. Caso contrario no hacemos nada.
+    if (respuesta) {
+      // Llamamos a la función saludar
+      saludar();
+    }
+
+  </script>
+</head>
+<body>
+</body>
+</html>

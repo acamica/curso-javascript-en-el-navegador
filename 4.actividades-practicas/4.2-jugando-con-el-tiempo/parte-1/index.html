@@ -1,0 +1,33 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Javascript en el Navegador - 4.2 Jugando con el tiempo (parte 1)</title>
+  <link rel="stylesheet" href="style.css">
+  <script>
+    window.onload = function() {
+
+      function saludar() {
+        // Obtenemos una referencia al elemento que tiene el id texto
+        var elemento = document.getElementById('texto');
+
+        // Establecemos el contenido del elemento
+        elemento.innerText = 'Aguante Javascript!!!';
+      }
+
+      /*
+        Utilizando setTimeout podemos ejecutar la funcion saludar dentro de 1000 milisegundos
+        (1 segundo). Obtenemos un id como respuesta y lo guardamos en la variable id
+      */
+      var id = window.setTimeout(saludar, 1000);
+
+      // Si descomentamos esta linea con clearTimeout cortamos la ejecución del timeout establecido
+      // window.clearTimeout(id);
+    }
+  </script>
+</head>
+<body>
+  <div id="texto"></div>
+</body>
+</html>
